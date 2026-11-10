@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#2c3e66">
+    <title>Siêu Trắc Nghiệm | Hệ thống kiểm tra kiến thức</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- HEADER -->
+        <header class="game-header">
+
+            <h1>📚 SIÊU TRẮC NGHIỆM</h1>
+            <p>Chọn khối + môn • Hệ thống tự bốc câu hỏi thông minh</p>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Chuyển chế độ sáng/tối" title="Chuyển chế độ sáng/tối">
+                <span class="theme-icon theme-icon-sun">☀️</span>
+                <span class="theme-icon theme-icon-moon">🌙</span>
+            </button>
+        </header>
+
+        <!-- SETUP PANEL -->
+        <section id="setupPanel" class="setup-panel">
+            <div class="form-grid">
+                <div class="input-group">
+                    <label>👤 TÊN HỌC SINH</label>
+                    <input type="text" id="studentName" placeholder="VD: Nguyễn Minh Anh" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label>📘 KHỐI LỚP</label>
+                    <select id="gradeSelect">
+                        <option value="6">Khối 6</option>
+                        <option value="7">Khối 7</option>
+                        <option value="8">Khối 8</option>
+                        <option value="9">Khối 9</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>📖 MÔN HỌC</label>
+                    <select id="subjectSelect">
+                        <option value="toan">Toán</option>
+                        <option value="nguvan">Ngữ văn</option>
+                        <option value="tienganh">Tiếng Anh</option>
+                        <option value="khtn">KHTN</option>
+                        <option value="lichsu_dialy">Lịch sử &amp; Địa lý</option>
+                        <option value="gdcd">GDCD</option>
+                        <option value="congnghe">Công nghệ</option>
+                        <option value="tinhoc">Tin học</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>📝 SỐ CÂU HỎI</label>
+                    <select id="questionCount">
+                        <option value="10">10 câu (nhanh)</option>
+                        <option value="20" selected>20 câu</option>
+                        <option value="30">30 câu</option>
+                        <option value="50">50 câu</option>
+                        <option value="100">100 câu (toàn bộ)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>⏱️ THỜI GIAN</label>
+                    <select id="timeLimit">
+                        <option value="0">Không giới hạn</option>
+                        <optgroup label="Ngắn">
+                            <option value="60">1 phút</option>
+                            <option value="120">2 phút</option>
+                            <option value="180">3 phút</option>
+                            <option value="300">5 phút</option>
+                        </optgroup>
+                        <optgroup label="Trung bình">
+                            <option value="420">7 phút</option>
+                            <option value="600">10 phút</option>
+                            <option value="900">15 phút</option>
+                            <option value="1200">20 phút</option>
+                            <option value="1500">25 phút</option>
+                        </optgroup>
+                        <optgroup label="Dài">
+                            <option value="1800">30 phút</option>
+                            <option value="2400">40 phút</option>
+                            <option value="2700">45 phút</option>
+                            <option value="3600">60 phút</option>
+                            <option value="5400">90 phút</option>
+                            <option value="7200">120 phút</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <button class="btn-primary btn-start" id="startGameBtn">🎯 BẮT ĐẦU LÀM BÀI</button>
+        </section>
+
+        <!-- QUIZ AREA -->
+        <section id="quizArea" class="quiz-area hidden">
+            <div class="info-bar">
+                <span class="student-badge" id="studentNameDisplay">Học sinh</span>
+                <span class="progress-text" id="progressText">Câu 1/20</span>
+                <span class="timer" id="timerDisplay">∞</span>
+                <span class="score-badge" id="scoreDisplay">Điểm: 0</span>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="question-nav" id="questionNav" aria-label="Danh sách câu hỏi"></div>
+
+            <div class="question-card">
+                <div class="question-meta">
+                    <span class="tag tag-dang" id="tagDang">Chủ đề</span>
+                    <span class="tag tag-mucdo" id="tagMucdo">Mức độ</span>
+                </div>
+                <div class="question-text" id="questionText">Đang tải...</div>
+                <div class="answers-list" id="answersContainer"></div>
+                <div class="action-btns">
+                    <button class="btn-secondary" id="submitBtn">✅ GỬI CÂU TRẢ LỜI</button>
+                    <button class="btn-secondary btn-accent hidden" id="nextBtn">➡️ CÂU TIẾP THEO</button>
+                    <button class="btn-danger" id="finishBtn">🏁 NỘP BÀI</button>
+                </div>
+            </div>
+            <div class="status-hint" id="statusHint"></div>
+        </section>
+
+        <!-- RESULT AREA -->
+        <section id="resultArea" class="result-panel hidden"></section>
+
+        <footer>© Hệ thống ngân hàng đề • 3.200+ câu hỏi • 8 môn × 4 khối</footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
